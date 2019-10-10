@@ -1,0 +1,50 @@
+<div class="row align-center" style="padding-left: 15px;padding-bottom: 15px;">
+	<div class="column align-center text-center">
+		<h3 style="color: #623073;">Employee Details</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col text-right pt-2 pb-2">
+		<span style="color: red;font-weight: bold;background-color: white;margin-top: 15%;"	*ngIf="isErrorMessage">
+			{{isErrorMessage}}<br>
+		</span>
+	</div>
+</div>
+
+<div class="table-responsive text-nowrap table-content">
+	<table class="table table-bordered table-hover table-striped">
+		<thead>
+			<tr style="background-color: #623073;color: #fff;">
+				<th class="text-center">Name</th>
+				<th class="text-center">Mobile No</th>
+				<th class="text-center">Email</th>
+				<th class="text-center">Date Of Birth</th>
+				<th class="text-center">Vehicle No</th>
+				<th class="text-center">Status</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let driver of driverDetails; let i= index">
+				<td>{{driver.name}}</td>
+				<td>{{driver.mobile}}</td>
+				<td>{{driver.email}}</td>
+				<td>{{driver.dateofbirth | date: 'dd/MM/yyyy'}}</td>
+				<td>{{driver.vehicleNumber}}</td>
+				<td class="text-center">
+					<span *ngIf="driver.status=='Active'" id="span" class="label label-success" style="background-color:green;color:white;">
+            {{driver.status}}</span>
+					<span *ngIf="driver.status=='InActive'" id="span" class="label label-success" style="background-color:red;color:white;">
+            {{driver.status}}</span>
+				</td>
+				<td class="text-center">
+					<span class="menu-action hiderow22">
+            <a id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">View</a>        
+          </span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

@@ -1,0 +1,81 @@
+<div class="row align-center" style="padding-left: 15px;padding-bottom: 15px;">
+	<div class="column align-center text-center">
+		<h3 style="color: #623073;">Ride Details</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col text-right pt-2 pb-2">
+		<button [routerLinkActive]="['active']"
+			routerLink="/admin/create-ride"  class="btn btn-primary">Add Ride</button>
+	</div>
+</div>
+<div class="row">
+	<div class="col text-right pt-2 pb-2">
+		<span style="color: red;font-weight: bold;background-color: white;margin-top: 15%;"	*ngIf="isErrorMessage">
+			{{isErrorMessage}}<br>
+		</span>
+	</div>
+</div>
+<div class="table-responsive text-nowrap table-content">
+	<table class="table table-bordered table-hover table-striped">
+		<thead>
+			<tr style="background-color: #623073;color: #fff;">
+				<th class="text-center">Employee Name</th>
+				<th class="text-center">Customer Name</th>
+				<th class="text-center">Pickup Address</th>
+				<th class="text-center">Pickup Time</th>
+				<th class="text-center">Drop Address</th>
+				<th class="text-center">Drop Time</th>
+				<th class="text-center">Amount</th>
+				<th class="text-center">Payment Status</th>
+				<th class="text-center">Status</th>
+				<th class="text-center">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let ride of rideDetails; let i= index">
+				<td>
+					<span class="menu-action hiderow22">
+            <a id="22" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="pl-1 pr-1 btnaction menu-icon vd_bd-yellow vd_yellow">{{ride.driverName}} </a>      
+          </span>
+				</td>
+				<td>
+					<span class="menu-action hiderow22">
+            <a id="22" data-original-title="edit" data-toggle="tooltip" data-placement="top" class="pl-1 pr-1 btnaction menu-icon vd_bd-yellow vd_yellow">{{ride.customerName}} </a>      
+          </span>
+				</td>
+				<td>{{ride.pickupAddress}}</td>
+				<td>{{ride.pickupDate | date: 'dd/MM/yyyy hh:ss'}}</td>
+				<td>{{ride.dropAddress}}</td>
+				<td>{{ride.dropDate | date: 'dd/MM/yyyy hh:ss'}}</td>
+				<td>{{ride.amount}}</td>
+				<td>{{ride.paymentStatus}}</td>
+				<td class="text-center">
+					<span *ngIf="ride.status=='COMPLETED'" id="span" class="label label-success" style="background-color:green;color:white;">
+            {{ride.status}}</span>
+					<span *ngIf="ride.status=='ACCEPTED'" id="span" class="label label-success" style="background-color:darkblue;color:white;">
+            {{ride.status}}</span>
+					<span *ngIf="ride.status=='PENDING'" id="span" class="label label-success" style="background-color:orange;color:white;">
+            {{ride.status}}</span>
+					<span *ngIf="ride.status=='CANCELLED'" id="span" class="label label-success" style="background-color:red;color:white;">
+            {{ride.status}}</span>
+				</td>
+				<td class="text-center">
+					<span class="menu-action hiderow22">
+            <a *ngIf="ride.status=='COMPLETED' || ride.status=='CANCELLED' || ride.status=='PENDING'" id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">View</a> 
+          <a *ngIf="ride.status!='COMPLETED' && ride.status!='CANCELLED' && ride.status!='PENDING'" id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">Track</a> 
+                    <a *ngIf="ride.status=='PENDING'" id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">Accept</a>  
+           <a *ngIf="ride.status!='COMPLETED' && ride.status!='CANCELLED' && ride.status!='ACCEPTED'" id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">Cancel</a>     
+          <a *ngIf="ride.status=='ACCEPTED'" id="22" data-original-title="delete" data-toggle="tooltip" data-placement="top" 
+          class="pl-1 pr-1 btnaction menu-icon vd_bd-red vd_red">Complete</a>           
+          </span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

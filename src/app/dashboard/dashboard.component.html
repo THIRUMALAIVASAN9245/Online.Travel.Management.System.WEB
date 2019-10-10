@@ -1,0 +1,297 @@
+<div class="container">
+    <div id="fullWidthContentRegionWrapper">
+        <div id="contentRegionBackgroundImage">
+            <div id="pageContent" class="clearfix">
+                <div id="mainContent" class="span-12">
+                    <section role="main">
+                        <div class="contentBox">
+                            <div class="row" style="padding-top: 25px;">
+                                <ul class="bc">
+                                    <li class="bc_item" (click)="verifyPolicyNumberHeader()"
+                                        [ngClass]="ngClassVerifyPolicyNumber()">
+                                        Verify Policy Number</li>
+                                    <li class="bc_item" (click)="enterBillDetailsHeader()"
+                                        [ngClass]="ngClassEnterBillDetails()">Enter
+                                        Bill Details</li>
+                                    <li class="bc_item" (click)="previewBillDetailsHeader()"
+                                        [ngClass]="ngClassPreviewBillDetails()">
+                                        Preview Bill Details</li>
+                                    <li class="bc_item" (click)="claimInsuranceHeader()"
+                                        [ngClass]="ngClassClaimInsurance()">Claim
+                                        Insurance</li>
+                                </ul>
+                            </div>
+                            <div class="row" style="padding-top: 20px;">
+                                <ng-container *ngIf="cliamStage === 'Verify Policy Number';else second">
+                                    <form role="form">
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <label class="control-label">Policy Number</label>
+                                                    <input [(ngModel)]="policyNumberModel" maxlength="100" type="text"
+                                                        required="required" name="policyNumberModel"
+                                                        class="form-control" placeholder="Enter Policy Number"
+                                                        style="text-transform: uppercase;">
+                                                </div>
+                                                <div *ngIf="status" class="alert alert-danger" style="padding: 5px;">
+                                                    <strong>{{status}}!</strong>
+                                                </div>
+                                                <button (click)="verifyPolicyNumber()" class="cta-button pull-right"
+                                                    type="button">Verify & Continue</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </ng-container>
+                                <ng-template #second>
+                                    <ng-container *ngIf="cliamStage === 'Enter Bill Details';else third">
+                                        <form role="form">
+                                            <div class="row setup-content" id="step-1" style="display: block;">
+                                                <div class="col-xs-8 col-md-offset-2">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Claim Type</label>
+                                                        <select class="form-control" name="TreatmentTypeId-{{rowIndex}}"
+                                                            #TreatmentTypeId="ngModel"
+                                                            [(ngModel)]="newAttribute.TreatmentType">
+                                                            <option *ngFor="let treatmentType of TreatmentTypes"
+                                                                [value]="treatmentType.id">{{treatmentType.type}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" *ngIf="newAttribute.TreatmentType==2">
+                                                        <label class="control-label">Disease</label>
+                                                        <input [(ngModel)]="diseaseModel" maxlength="100"
+                                                            type="text" required="required" name="diseaseModel"
+                                                            class="form-control" placeholder="Enter Disease">
+                                                    </div>
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="col-md-3">Claim Type</th>
+                                                                <th class="col-md-2">Bill Number</th>
+                                                                <th class="col-md-2">Bill Amount</th>
+                                                                <th class="col-md-4">Description</th>
+                                                                <th class="col-md-1">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let field of fieldArray; let i = index">
+                                                                <td>
+                                                                    <span>{{field.TreatmentType}}</span>
+                                                                </td>
+                                                                <td>
+                                                                    <input [(ngModel)]="field.BillNumber"
+                                                                        class="form-control" type="text"
+                                                                        name="{{field.BillNumber}}" />
+                                                                </td>
+                                                                <td>
+                                                                    <input [(ngModel)]="field.BillAmount"
+                                                                        class="form-control" type="text"
+                                                                        name="{{field.BillAmount}}" />
+                                                                </td>
+                                                                <td>
+                                                                    <input [(ngModel)]="field.Description"
+                                                                        class="form-control" type="text"
+                                                                        name="{{field.Description}}" />
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-default" type="button"
+                                                                        (click)="deleteFieldValue(i)">Delete</button>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="text-align: center">-</td>
+                                                                <td>
+                                                                    <input class="form-control" type="text"
+                                                                        id="newAttributeBillNumber"
+                                                                        [(ngModel)]="newAttribute.BillNumber"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        name="newAttributeBillNumber" />
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" type="text"
+                                                                        id="newAttributeBillAmount"
+                                                                        [(ngModel)]="newAttribute.BillAmount"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        name="newAttributeBillAmount" />
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" type="text"
+                                                                        id="newAttributeDescription"
+                                                                        [(ngModel)]="newAttribute.Description"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        name="newAttributeDescription" />
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-default" type="button"
+                                                                        (click)="addFieldValue()">Add</button>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div *ngIf="status" class="alert alert-danger"
+                                                        style="padding: 5px;">
+                                                        <strong>{{status}}!</strong>
+                                                    </div>
+                                                    <button (click)="enterBillDetails()" c class="cta-button pull-right"
+                                                        type="button">Submit Bill Details</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #third>
+                                    <ng-container *ngIf="cliamStage === 'Preview Bill Details';else fourth">
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 labal-policy">
+                                                        <label class="control-label">Policy Number</label>
+                                                    </div>
+                                                    <div class="col-md-6 labal-policy-value"
+                                                        style="text-transform: uppercase;">
+                                                        <label class="control-label">{{policyNumberModel}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-8 col-md-offset-2">
+                                                <table class="table table-striped table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-3">Treatment Type</th>
+                                                            <th class="col-md-2">Bill Number</th>
+                                                            <th class="col-md-2">Bill Amount</th>
+                                                            <th class="col-md-4">Description</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let field of fieldArray; let i = index">
+                                                            <td><span>{{field.TreatmentType}}</span></td>
+                                                            <td><span>{{field.BillNumber}}</span></td>
+                                                            <td><span>{{field.BillAmount}}</span></td>
+                                                            <td><span>{{field.Description}}</span></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button (click)="previewBillDetails()" class="cta-button pull-right"
+                                                    type="button">Confirm & Claim Insurance</button>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                                <ng-template #fourth>
+                                    <div *ngIf="verifyBillDetailResponse.RequestStatus==='Success'">
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-12 labal-policy" style="padding-left: 0px;">
+                                                        <div class="col-md-2" style="margin-bottom: 5px;">
+                                                            <span
+                                                                class="input-group-addon success input-group-radius"><span
+                                                                    class="glyphicon glyphicon-ok"></span></span>
+                                                        </div>
+                                                        <div class="col-md-10" style="margin-top: 5px;padding: 0px;">
+                                                            <label class="control-label"> The Claim Has
+                                                                Been Successfully
+                                                                Completed</label> </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 labal-policy">
+                                                        <label class="control-label">Total Amount</label>
+                                                    </div>
+                                                    <div class="col-md-6 labal-policy-value"
+                                                        style="text-transform: uppercase;">
+                                                        <label
+                                                            class="control-label">{{verifyBillDetailResponse.TotalAmount}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 labal-policy">
+                                                        <label class="control-label">Claimed Amount</label>
+                                                    </div>
+                                                    <div class="col-md-6 labal-policy-value"
+                                                        style="text-transform: uppercase;">
+                                                        <label
+                                                            class="control-label">{{verifyBillDetailResponse.ClaimedAmount}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-6 labal-policy">
+                                                        <label class="control-label">Balance Amount</label>
+                                                    </div>
+                                                    <div class="col-md-6 labal-policy-value"
+                                                        style="text-transform: uppercase;">
+                                                        <label
+                                                            class="control-label">{{verifyBillDetailResponse.BalanceAmount}}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="verifyBillDetailResponse.RequestStatus==='Failure'">
+                                        <div class="row setup-content" id="step-1" style="display: block;">
+                                            <div class="col-xs-6 col-md-offset-3">
+                                                <div class="alert alert-danger" style="padding: 5px;">
+                                                    <strong>Claim has been rejected!</strong>
+                                                </div>
+                                            </div>
+                                            <div  *ngIf="verifyBillDetailResponse.HospitalName" class="row setup-content" id="step-1" style="display: block;">
+                                                <div class="col-xs-6 col-md-offset-3">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 labal-policy">
+                                                            <label class="control-label">Hospital Name</label>
+                                                        </div>
+                                                        <div class="col-md-6 labal-policy-value"
+                                                            style="text-transform: uppercase;">
+                                                            <label
+                                                                class="control-label">{{verifyBillDetailResponse.HospitalName}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="verifyBillDetailResponse.TreatmentDate" class="row setup-content" id="step-1" style="display: block;">
+                                                <div class="col-xs-6 col-md-offset-3">
+                                                    <div class="form-group">
+                                                        <div class="col-md-6 labal-policy">
+                                                            <label class="control-label">Treatment Date</label>
+                                                        </div>
+                                                        <div class="col-md-6 labal-policy-value"
+                                                            style="text-transform: uppercase;">
+                                                            <label
+                                                                class="control-label">{{verifyBillDetailResponse.TreatmentDate}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row setup-content" id="step-1" style="display: block;margin-top: 15px;">
+                                        <div class="col-xs-9 col-md-offset-2">
+                                            <button (click)="claimInsurance()" class="cta-button pull-right"
+                                                type="button">Claim New Insurance</button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

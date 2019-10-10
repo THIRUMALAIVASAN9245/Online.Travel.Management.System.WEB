@@ -1,0 +1,120 @@
+<div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+	<h3 class="register-heading">Register as a Employee</h3>
+	<div>
+		<form class="row register-form" style="width: 100%;padding-bottom: 10px;" [formGroup]="registerForm"
+			(ngSubmit)="onSubmit()">
+			<div class="col-md-6">
+				<div class="form-group">
+					<input type="text" placeholder="First Name *" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+					<div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+						<div *ngIf="f.firstName.errors.required">First Name is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Last Name *" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+					<div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+						<div *ngIf="f.lastName.errors.required">Last Name is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="password" placeholder="Password *" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+					<div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+						<div *ngIf="f.password.errors.required">Password is required</div>
+						<div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="password" placeholder="Confirm Password*" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+					<div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+						<div *ngIf="f.confirmPassword.errors.required">Confirm Password is required</div>
+						<div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Vehicle Number *"  formControlName="vehicleNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.vehicleNumber.errors }" />
+					<div *ngIf="submitted && f.vehicleNumber.errors" class="invalid-feedback">
+						<div *ngIf="f.vehicleNumber.errors.required">Vehicle Number is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="License *" formControlName="license" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.license.errors }" />
+					<div *ngIf="submitted && f.license.errors" class="invalid-feedback">
+						<div *ngIf="f.license.errors.required">License Number is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text"placeholder="Insurance *" formControlName="insurance" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.insurance.errors }" />
+					<div *ngIf="submitted && f.insurance.errors" class="invalid-feedback">
+						<div *ngIf="f.insurance.errors.required">Insurance Number is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<button accept="image/x-png,image/gif,image/jpeg" type="file" id="btnUpload" class="btn btn-primary" name="Upload">Taxi Picture</button>
+					<img src="https://www.w3schools.com/html/img_girl.jpg" style="margin-left: 5%;" alt="Taxi image" width="100" height="100">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<input type="text" placeholder="Email *" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+					<div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+						<div *ngIf="f.email.errors.required">Email is required</div>
+						<div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Phone Number *" formControlName="phoneNumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phoneNumber.errors }" />
+					<div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback">
+						<div *ngIf="f.phoneNumber.errors.required">Phone Number is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Date Of Birth *" formControlName="dateOfBirth" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dateOfBirth.errors }"  bsDatepicker  placement="bottom left" />
+					<div *ngIf="submitted && f.dateOfBirth.errors" class="invalid-feedback">
+						<div *ngIf="f.dateOfBirth.errors.required">Date Of Birth is required</div>
+					</div>
+				</div>
+				<!-- <div class="custom-control radio custom-control-inline pb-4 pt-2">
+					<input id="male" type="radio" class="custom-control-input" value="male" name="gender" formControlName="gender">
+					<label class="custom-control-label" for="male">Male</label>
+				</div>
+				<div class="custom-control radio custom-control-inline pb-4">
+					<input id="female" type="radio" class="custom-control-input" value="female" name="gender" formControlName="gender">
+					<label class="custom-control-label" for="female">Female</label>
+				</div> -->
+        	<div class="custom-control radio custom-control-inline pb-2 pt-2">
+						<label formControlName="gender" for="male" class="checkboxes-custom">Male
+              <input id="male"   name="gender" checked="checked" type="radio">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+          <div class="custom-control radio custom-control-inline pb-2 pt-2">
+            <label formControlName="gender"  for="female" class="checkboxes-custom">Female
+              <input id="female" type="radio"  name="gender" >
+              <span class="checkmark"></span>
+            </label>
+          </div>
+				<div class="form-group">
+					<input type="text" placeholder="Permit *" formControlName="permit" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.permit.errors }" />
+					<div *ngIf="submitted && f.permit.errors" class="invalid-feedback">
+						<div *ngIf="f.permit.errors.required">Permit is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Registration *" formControlName="registration" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.registration.errors }" />
+					<div *ngIf="submitted && f.registration.errors" class="invalid-feedback">
+						<div *ngIf="f.registration.errors.required">Registration is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="text" placeholder="Description *" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+					<div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+						<div *ngIf="f.description.errors.required">Description is required</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="btnRegister"  value="Register"/>
+        </div>
+				</div>
+		</form>
+	</div>
+</div>
